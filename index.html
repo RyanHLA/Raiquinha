@@ -1043,6 +1043,109 @@
             }
         }
 
+        /* ============================================================
+           FLIP CARD INVITATION
+        ============================================================ */
+        .final-invite-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            /* Um pequeno atraso para aparecer depois do resto do texto */
+            animation: fadeUp 1s ease 4s both;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 260px;
+            height: 340px;
+            perspective: 1000px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeUp 1s ease 4.5s both;
+
+            /* Centralização garantida */
+            margin: 0 auto 2.5rem;
+            display: block;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            /* Efeito de mola suave */
+            transform-style: preserve-3d;
+        }
+
+        .flip-card-front:active {
+            transform: scale(0.95);
+            transition: transform 0.1s;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .flip-card-front {
+            background: var(--glass);
+            border: 1px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-light);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            backdrop-filter: blur(10px);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .flip-card-front:hover {
+            background: rgba(201, 169, 110, 0.15);
+            box-shadow: 0 15px 40px rgba(201, 169, 110, 0.3);
+        }
+
+        .flip-card-front i {
+            margin-left: 10px;
+            animation: bounceClick 1.5s infinite;
+        }
+
+        @keyframes bounceClick {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .flip-card-back {
+            background-color: #050002;
+            transform: rotateY(180deg);
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 3px;
@@ -1202,8 +1305,6 @@
         <div class="final-bg"></div>
         <div class="final-container">
 
-            <div class="final-ornament">💫</div>
-
             <h2 class="final-title">
                 Feliz<br><strong>2 anos e 3 meses</strong>
             </h2>
@@ -1223,6 +1324,20 @@
             <p class="final-prose">
                 Que esse dia seja tão especial quanto você é pra mim.
             </p>
+
+            <p class="final-invite-text">
+                E nesse dia especial, gostaria de saber se minha linda dama gostaria de...
+            </p>
+
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        Clique aqui <i class="fa-solid fa-arrow-pointer"></i>
+                    </div>
+                    <div class="flip-card-back" style="background-image: url('src/img10.jpg');">
+                    </div>
+                </div>
+            </div>
 
             <button class="restart-btn" onclick="location.reload()">↩ Recomeçar a história</button>
 
