@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Para Raiquinha 💕</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@1,400;1,700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ============================================================
+           RESET & BASE
+        ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --rose: #e8a0b0;
+            --blush: #f4c2cb;
+            --gold: #c9a96e;
+            --gold-light: #e8d5b0;
+            --deep: #2d0b1a;
+            --deep2: #1a0810;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-muted: rgba(255, 255, 255, 0.55);
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'DM Sans', sans-serif;
+            background: #0a0005;
+            color: #fff;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ============================================================
+           FLOATING PARTICLES CANVAS
+        ============================================================ */
+        #particleCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ============================================================
+           SCREENS
+        ============================================================ */
+        .screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .screen.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .screen.fade-in {
+            animation: screenFadeIn 1.2s ease forwards;
+        }
+
+        .screen.fade-out {
+            animation: screenFadeOut 0.8s ease forwards;
+        }
+
+        @keyframes screenFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(1.02);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes screenFadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* ============================================================
+           SCREEN 0 — INTRO
+        ============================================================ */
+        #screen-intro {
+            background: radial-gradient(ellipse at 60% 40%, #5c1a30 0%, #2d0b1a 45%, #0a0005 100%);
+            text-align: center;
+            padding: 2.5rem 2rem;
+            gap: 0;
+            z-index: 15;
+        }
+
+        /* Animated background shimmer */
+        #screen-intro::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 70%, rgba(232, 160, 176, 0.12) 0%, transparent 60%);
+            animation: shimmerBg 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes shimmerBg {
+            from {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        .intro-badge {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            color: var(--gold);
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 0.9s ease 0.2s both;
+            margin-bottom: 2.2rem;
+        }
+
+        .heart-wrap {
+            position: relative;
+            margin-bottom: 2rem;
+            animation: fadeUp 0.9s ease 0.4s both;
+        }
+
+        .heart-svg {
+            width: 130px;
+            height: 130px;
+            filter: drop-shadow(0 0 30px rgba(232, 160, 176, 0.65)) drop-shadow(0 0 60px rgba(232, 160, 176, 0.25));
+            animation: heartbeat 2.8s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            14% {
+                transform: scale(1.12);
+            }
+
+            28% {
+                transform: scale(1);
+            }
+
+            42% {
+                transform: scale(1.07);
+            }
+
+            70% {
+                transform: scale(1);
+            }
+        }
+
+        .heart-ring {
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 160, 176, 0.2);
+            animation: ringPulse 2.8s ease-in-out infinite;
+        }
+
+        .heart-ring:nth-child(2) {
+            inset: -36px;
+            border-color: rgba(232, 160, 176, 0.1);
+            animation-delay: 0.4s;
+        }
+
+        @keyframes ringPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: scale(1.15);
+                opacity: 0;
+            }
+        }
+
+        .heart-path {
+            fill: var(--rose);
+        }
+
+        .heart-text {
+            fill: rgba(255, 255, 255, 0.9);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 3.5px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .intro-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.4rem, 10vw, 3.4rem);
+            font-weight: 300;
+            color: #fff;
+            line-height: 1.15;
+            animation: fadeUp 0.9s ease 0.6s both;
+            margin-bottom: 1rem;
+        }
+
+        .intro-title .highlight {
+            display: block;
+            font-style: italic;
+            font-weight: 400;
+            background: linear-gradient(135deg, var(--blush), var(--gold-light), var(--blush));
+            background-size: 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShimmer 3s ease infinite;
+        }
+
+        @keyframes textShimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .intro-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            animation: fadeUp 0.9s ease 0.8s both;
+            margin-bottom: 2.8rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: linear-gradient(135deg, #c9a96e 0%, #e8d5b0 50%, #c9a96e 100%);
+            background-size: 200% auto;
+            color: #1e100a;
+            border: none;
+            border-radius: 100px;
+            padding: 1.05rem 2.6rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.07em;
+            box-shadow: 0 6px 40px rgba(201, 169, 110, 0.45), 0 0 0 0 rgba(201, 169, 110, 0.4);
+            animation: fadeUp 0.9s ease 1.1s both, btnGlow 2.5s ease-in-out 2s infinite;
+            transition: background-position 0.5s, transform 0.25s, box-shadow 0.25s;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            background-position: right center;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 50px rgba(201, 169, 110, 0.55);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        @keyframes btnGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 6px 40px rgba(201, 169, 110, 0.45), 0 0 0 0 rgba(201, 169, 110, 0);
+            }
+
+            50% {
+                box-shadow: 0 6px 40px rgba(201, 169, 110, 0.55), 0 0 0 14px rgba(201, 169, 110, 0);
+            }
+        }
+
+        /* ============================================================
+           SCREEN 1 — CINEMATIC SLIDESHOW
+        ============================================================ */
+        #screen-slideshow {
+            background: #000;
+            z-index: 10;
+            padding: 0;
+        }
+
+        #slidesContainer {
+            position: absolute;
+            inset: 0;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Ken Burns background */
+        .slide-bg {
+            position: absolute;
+            inset: -8%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.35) blur(2px);
+            z-index: 1;
+            animation: none;
+            transform-origin: center;
+        }
+
+        .slide.active .slide-bg {
+            animation: kenBurns 12s ease-out forwards;
+        }
+
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1.12) translateX(0px);
+            }
+
+            100% {
+                transform: scale(1.0) translateX(-20px);
+            }
+        }
+
+        /* Photo frame — cinematic centered */
+        .slide-frame {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            /* Ajuste: diminuímos o topo para 2vh e aumentamos a base para 32vh */
+            padding: 2vh 0 32vh;
+        }
+
+        .slide-photo-wrap {
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px) scale(0.92);
+        }
+
+        .slide.active .slide-photo-wrap {
+            animation: photoReveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+        }
+
+        @keyframes photoReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .slide-photo {
+            width: min(72vw, 320px);
+            aspect-ratio: 3 / 4;
+            /* Define a proporção retangular (estilo retrato) */
+            max-height: 55vh;
+            /* Aumentado levemente para acomodar a nova altura */
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.08),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Thin golden border accent */
+        .slide-photo::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        /* Corner ornaments */
+        .slide-photo-wrap::before,
+        .slide-photo-wrap::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--gold);
+            border-style: solid;
+            opacity: 0.6;
+        }
+
+        .slide-photo-wrap::before {
+            top: -8px;
+            left: -8px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .slide-photo-wrap::after {
+            bottom: -8px;
+            right: -8px;
+            border-width: 0 2px 2px 0;
+        }
+
+        /* Slide text content */
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.8rem 10vh;
+            z-index: 4;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .slide.active .slide-content {
+            animation: contentSlideUp 0.9s ease 0.7s forwards;
+        }
+
+        @keyframes contentSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-chapter {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .slide-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.7rem, 7vw, 2.4rem);
+            font-weight: 300;
+            line-height: 1.2;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .slide-title em {
+            color: var(--blush);
+            font-style: italic;
+        }
+
+        .slide-body {
+            font-size: 0.84rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin-top: 0.55rem;
+            line-height: 1.7;
+            max-width: 480px;
+        }
+
+        /* Progress bars */
+        .slideshow-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 3px;
+            padding: 1rem 1rem 0;
+            z-index: 20;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), #fff);
+            width: 0%;
+            border-radius: 2px;
+        }
+
+        .progress-bar.active .progress-bar-fill {
+            animation: fillBar 10s linear forwards;
+        }
+
+        .progress-bar.done .progress-bar-fill {
+            width: 100%;
+        }
+
+        @keyframes fillBar {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Slide counter */
+        .slide-counter {
+            position: absolute;
+            top: 2.8rem;
+            right: 1.2rem;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.1em;
+            z-index: 20;
+            font-weight: 300;
+        }
+
+        /* Controls */
+        .slideshow-controls {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.9rem;
+            z-index: 20;
+        }
+
+        .ctrl-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.25s;
+        }
+
+        .ctrl-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.08);
+        }
+
+        .ctrl-btn:active {
+            transform: scale(0.94);
+        }
+
+        .ctrl-btn-next {
+            width: auto;
+            padding: 0 1.6rem;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            gap: 0.5rem;
+        }
+
+        /* Tap zones (invisible L/R halves) */
+        .tap-prev,
+        .tap-next {
+            position: absolute;
+            top: 3.5rem;
+            bottom: 7rem;
+            width: 40%;
+            z-index: 15;
+            cursor: pointer;
+        }
+
+        .tap-prev {
+            left: 0;
+        }
+
+        .tap-next {
+            right: 0;
+        }
+
+        /* ============================================================
+           SCREEN 2 — LOVE LETTER
+        ============================================================ */
+        #screen-letter {
+            background: #050002;
+            overflow-y: auto;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .letter-bg {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(92, 26, 48, 0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 80%, rgba(44, 0, 22, 0.4) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .letter-container {
+            position: relative;
+            z-index: 1;
+            max-width: 520px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 5vh 2rem 10vh;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        #screen-letter.active .letter-header {
+            animation: fadeUp 1.2s ease 0.5s forwards;
+        }
+
+        .letter-ornament {
+            font-size: 1.8rem;
+            color: var(--gold);
+            opacity: 0.6;
+            margin-bottom: 1rem;
+            display: block;
+            animation: spinIn 1.5s ease 0.5s both;
+        }
+
+        @keyframes spinIn {
+            from {
+                transform: rotate(-180deg) scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: rotate(0deg) scale(1);
+                opacity: 0.6;
+            }
+        }
+
+        .letter-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 9vw, 2.8rem);
+            font-weight: 300;
+            font-style: italic;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .letter-title .gold {
+            color: var(--gold);
+        }
+
+        .letter-date {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-top: 0.7rem;
+        }
+
+        /* Letter blocks */
+        .letter-block {
+            opacity: 0;
+            transform: translateY(28px);
+            padding: 0 0 3rem 0;
+        }
+
+        .letter-block-divider {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 3rem;
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .reveal {
+            animation: revealBlock 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .reveal-line {
+            animation: revealLine 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes revealBlock {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes revealLine {
+            to {
+                opacity: 0.7;
+                transform: scaleX(1);
+            }
+        }
+
+        .letter-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 6.5vw, 2rem);
+            font-weight: 300;
+            font-style: italic;
+            color: #fff;
+            line-height: 1.45;
+            text-align: center;
+        }
+
+        .letter-quote em {
+            color: var(--blush);
+            font-style: normal;
+        }
+
+        .letter-prose {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.9;
+            text-align: center;
+        }
+
+        .letter-prose strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .letter-big {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 7.5vw, 2.5rem);
+            font-weight: 400;
+            color: #fff;
+            line-height: 1.3;
+            text-align: center;
+        }
+
+        .letter-big strong {
+            display: block;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-light));
+            background-size: 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShimmer 4s ease infinite;
+        }
+
+        .letter-photo-strip {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+            margin: 0 -0.5rem;
+        }
+
+        .letter-photo-item {
+            aspect-ratio: 2/3;
+            background-size: cover;
+            background-position: center;
+            border-radius: 6px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .letter-photo-item:hover {
+            transform: scale(1.03) rotate(-1deg);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        .letter-photo-item:nth-child(even) {
+            transform: rotate(1.5deg);
+        }
+
+        .letter-photo-item:nth-child(odd) {
+            transform: rotate(-1deg);
+        }
+
+        .letter-continue-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.18), rgba(232, 213, 176, 0.1));
+            border: 1px solid rgba(201, 169, 110, 0.4);
+            color: var(--gold-light);
+            border-radius: 100px;
+            padding: 0.9rem 2.2rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 0.07em;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            margin: 2rem auto 0;
+            display: flex;
+        }
+
+        .letter-continue-btn:hover {
+            background: rgba(201, 169, 110, 0.25);
+            border-color: rgba(201, 169, 110, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(201, 169, 110, 0.2);
+        }
+
+        /* ============================================================
+           SCREEN 3 — FINAL SURPRISE
+        ============================================================ */
+        #screen-final {
+            background: radical-gradient(#050002, #0a0005);
+            background: #050002;
+            text-align: center;
+            padding: 2.5rem 2rem;
+            overflow-y: auto;
+            z-index: 10;
+            align-items: center;
+        }
+
+        .final-bg {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 50% 30%, rgba(92, 26, 48, 0.5) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 80%, rgba(201, 169, 110, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .final-container {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            padding: 2rem 0 4rem;
+        }
+
+        .final-ornament {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: floatIn 1s ease 0.5s both;
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .final-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 9vw, 3.2rem);
+            font-weight: 300;
+            font-style: italic;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 1.2s ease 1s both;
+        }
+
+        .final-title strong {
+            font-style: normal;
+            color: var(--blush);
+        }
+
+        .final-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.2rem 2rem;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: scaleIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) 1.8s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .final-card-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.25rem, 5.5vw, 1.6rem);
+            color: rgba(255, 255, 255, 0.88);
+            line-height: 1.55;
+            font-weight: 300;
+        }
+
+        .final-card-text em {
+            color: var(--blush);
+            font-style: italic;
+        }
+
+        .final-card-text strong {
+            color: var(--gold-light);
+            font-weight: 400;
+        }
+
+        .final-signature {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--gold);
+        }
+
+        .final-heart-burst {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.9s ease 2.8s both;
+        }
+
+        .final-prose {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 3.2s both;
+        }
+
+        .restart-btn {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            animation: fadeUp 1s ease 5s both;
+            margin-top: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .restart-btn:hover {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        /* ============================================================
+           COMMON ANIMATIONS
+        ============================================================ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="musicaRaiquinha" loop>
+        <source src="src/perfect.mp3" type="audio/mpeg">
+    </audio>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- ===== SCREEN 0 — INTRO ===== -->
+    <section id="screen-intro" class="screen active">
+        <span class="intro-badge">✦ Para a minha princesinha ✦</span>
+
+        <div class="heart-wrap">
+            <div class="heart-ring"></div>
+            <div class="heart-ring"></div>
+            <svg class="heart-svg" viewBox="0 0 24 24">
+                <path class="heart-path"
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                <text x="12" y="10.8" text-anchor="middle" dominant-baseline="middle" class="heart-text">R + R</text>
+            </svg>
+        </div>
+
+        <h1 class="intro-title">
+            Um presente
+            <span class="highlight">especial para você</span>
+        </h1>
+
+        <p class="intro-subtitle">Só para os seus olhos. Abra quando estiver pronta.</p>
+
+        <button class="btn-primary" onclick="startShow()">
+            <i class="fa-solid fa-envelope-open-heart"></i>
+            Abrir minha surpresa
+        </button>
+    </section>
+
+    <!-- ===== SCREEN 1 — SLIDESHOW ===== -->
+    <section id="screen-slideshow" class="screen">
+        <div class="slideshow-progress" id="slideshowProgress"></div>
+        <div class="slide-counter" id="slideCounter">1 / 11</div>
+        <div id="slidesContainer"></div>
+
+        <!-- Tap zones -->
+        <div class="tap-prev" onclick="prevSlide()"></div>
+        <div class="tap-next" onclick="nextSlide()"></div>
+
+        <div class="slideshow-controls">
+            <button class="ctrl-btn" onclick="prevSlide()" title="Anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="ctrl-btn" onclick="togglePause()" id="btnPause" title="Pausar">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+            <button class="ctrl-btn ctrl-btn-next" onclick="nextSlide()" id="btnNext">
+                Próximo <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- ===== SCREEN 2 — LOVE LETTER ===== -->
+    <section id="screen-letter" class="screen">
+        <div class="letter-bg"></div>
+        <div class="letter-container">
+
+            <div class="letter-header">
+                <span class="letter-ornament">✦</span>
+                <h2 class="letter-title">Uma carta <span class="gold">para você</span></h2>
+                <p class="letter-date">8 de março de 2026 · Dia da mulher</p>
+            </div>
+
+            <div class="letter-block" id="lb1">
+                <p class="letter-quote">
+                    Minha princesinha, você sabe que eu te amo muito.<br>
+                    Mas quero que você saiba que se o que existe entre nós fosse <em>encanto</em>, já teria quebrado.
+                </p>
+            </div>
+
+            <div class="letter-block-divider" id="ld1"></div>
+
+            <div class="letter-block" id="lb2">
+                <p class="letter-quote">
+                    Se fosse impulso,<br><em style="color:var(--rose)">teria passado.</em>
+                </p>
+            </div>
+
+            <div class="letter-block-divider" id="ld2"></div>
+
+            <div class="letter-block" id="lb3">
+                <p class="letter-quote">
+                    Se fosse raso,<br><em style="color:var(--rose)">eu teria desistido.</em>
+                </p>
+            </div>
+
+            <div class="letter-block-divider" id="ld3"></div>
+
+            <!-- Photo strip -->
+            <div class="letter-block" id="lb4">
+                <div class="letter-photo-strip">
+                    <div class="letter-photo-item" style="background-image:url('src/img8.jpg')"></div>
+                    <div class="letter-photo-item" style="background-image:url('src/img9.jpg')"></div>
+                    <div class="letter-photo-item" style="background-image:url('src/img10.jpg')"></div>
+                    <div class="letter-photo-item" style="background-image:url('src/img11.jpg')"></div>
+                </div>
+            </div>
+
+            <div class="letter-block-divider" id="ld4"></div>
+
+            <div class="letter-block" id="lb5">
+                <p class="letter-big">
+                    Mas entre nós existe um
+                    <strong>amor incondicional.</strong>
+                </p>
+            </div>
+
+            <div class="letter-block-divider" id="ld5"></div>
+
+            <div class="letter-block" id="lb6">
+                <p class="letter-prose">
+                    Eu estou com você porque o que existe entre a gente não depende de dias bons.
+                    Porque estamos presentes mesmo nos dias silenciosos. Estar ao seu lado não é sobre intensidade,
+                    é sobre <strong>verdade</strong>, <strong>companheirismo</strong> e muito amor.
+                </p>
+            </div>
+
+            <div class="letter-block-divider" id="ld6"></div>
+
+            <div class="letter-block" id="lb7">
+                <p class="letter-prose" style="color: rgba(255,255,255,0.85); font-size:1rem;">
+                    E tudo isso não se encontra fácil.
+                </p>
+            </div>
+
+            <div class="letter-block" id="lb8" style="padding-bottom:1rem; text-align:center;">
+                <button class="letter-continue-btn" onclick="goToFinal()">
+                    <i class="fa-solid fa-heart"></i>
+                    Ver a surpresa final
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== SCREEN 3 — FINAL ===== -->
+    <section id="screen-final" class="screen">
+        <div class="final-bg"></div>
+        <div class="final-container">
+
+            <div class="final-ornament">💫</div>
+
+            <h2 class="final-title">
+                Feliz Dia da<br><strong>Mulher Incrível</strong>
+            </h2>
+
+            <div class="final-card">
+                <p class="final-card-text">
+                    Você é a mulher mais <em>linda</em>, mais <em>inteligente</em> e mais <em>especial</em> que eu já
+                    conheci.<br><br>
+                    Obrigado por cada momento, por cada sorriso, por cada vez que você escolheu estar aqui.<br><br>
+                    Você me faz querer ser <strong>o melhor de mim</strong> — todo dia.
+                </p>
+                <p class="final-signature">— Com todo o meu amor, R. 💕</p>
+            </div>
+
+            <div class="final-heart-burst">💗✨💗</div>
+
+            <p class="final-prose">
+                Hoje e sempre, a minha princesinha favorita é você.<br>
+                Que esse dia seja tão especial quanto você é pra mim.
+            </p>
+
+            <button class="restart-btn" onclick="location.reload()">↩ Recomeçar a história</button>
+
+        </div>
+    </section>
+
+    <script>
+        /* ============================================================
+           SLIDE DATA — all 11 photos
+        ============================================================ */
+        const SLIDES = [
+            {
+                photo: 'src/img1.jpg',
+                chapter: 'Capítulo I',
+                title: 'A mulher que mudou<br><em>a minha vida</em>',
+                body: 'Eu ainda me lembro do momento exato em que te vi no aniversário de Iago. O seu sorriso, o seu jeito, seu vestido — eu soube ali que algo entre nós iria começar.'
+            },
+            {
+                photo: 'src/img2.jpg',
+                chapter: 'Capítulo II',
+                title: 'Os nossos momentos<br><em>que eu amo</em>',
+                body: 'Eu não tenho um momento favorito. Porque em todos que você está, se torna perfeito.'
+            },
+            {
+                photo: 'src/img3.jpg',
+                chapter: 'Capítulo III',
+                title: 'O que você significa<br><em>para mim</em>',
+                body: 'Ah minha Raiquinha, para mim você é tudo. Você é minha melhor amiga, a minha paz, a minha felicidade.'
+            },
+            {
+                photo: 'src/img4.jpg',
+                chapter: 'Capítulo IV',
+                title: 'O sorriso que eu<br><em>mais amo ver</em>',
+                body: 'Cada foto nossa guarda um pedaço da história que estamos construindo juntos, com muito amor e cumplicidade.'
+            },
+            {
+                photo: 'src/img5.jpg',
+                chapter: 'Capítulo V',
+                title: 'A paz que você<br><em>me dá</em>',
+                body: 'Estar perto de você é como respirar fundo depois de um dia longo. Você é a minha quietude favorita.'
+            },
+            {
+                photo: 'src/img6.jpg',
+                chapter: 'Capítulo VI',
+                title: 'A sua beleza que<br><em>me encanta</em>',
+                body: 'Não é só você por fora, embora seja uma beleza que me tira o fôlego. É você por dentro, a sua essência que me cativa todos os dias.'
+            },
+            {
+                photo: 'src/img7.jpg',
+                chapter: 'Capítulo VII',
+                title: 'Os nossos olhares<br><em>que dizem tudo</em>',
+                body: 'Tem um olhar seu que me diz mais do que mil palavras. Aquele olhar que eu guardo no coração.'
+            },
+            {
+                photo: 'src/img8.jpg',
+                chapter: 'Capítulo VIII',
+                title: 'A companheira<br><em>dos meus dias</em>',
+                body: 'Você é a pessoa com quem eu quero compartilhar cada conquista, cada alegria, cada detalhe do dia que antes parecia insignificante.'
+            },
+            {
+                photo: 'src/img9.jpg',
+                chapter: 'Capítulo IX',
+                title: 'Juntos, em<br><em>qualquer lugar</em>',
+                body: 'Não importa onde seja. Com você, qualquer lugar vira o lugar certo.'
+            },
+            {
+                photo: 'src/img10.jpg',
+                chapter: 'Capítulo X',
+                title: 'O amor que<br><em>não se explica</em>',
+                body: 'Tem coisas que eu sinto por você que não cabem em palavras. Mas espero que você sinta, mesmo assim.'
+            },
+            {
+                photo: 'src/img11.jpg',
+                chapter: 'Capítulo XI',
+                title: 'E a nossa história<br><em>continua...</em>',
+                body: 'Essa é só uma pequena parte de tudo que ainda vamos viver. Obrigado por me deixar fazer parte da sua história, minha princesinha.'
+            }
+        ];
+
+        const SLIDE_DURATION = 10000;
+        let currentSlide = 0;
+        let isPaused = false;
+        let autoTimer;
+
+        /* ── Screen transitions ── */
+        function goToScreen(id) {
+            const current = document.querySelector('.screen.active');
+            if (current) {
+                current.classList.add('fade-out');
+                setTimeout(() => {
+                    current.classList.remove('active', 'fade-out');
+                }, 800);
+            }
+            setTimeout(() => {
+                const next = document.getElementById(id);
+                next.classList.add('active', 'fade-in');
+                setTimeout(() => next.classList.remove('fade-in'), 1200);
+            }, 400);
+        }
+
+        function startShow() {
+            document.getElementById('musicaRaiquinha').play().catch(() => { });
+            buildSlides();
+            goToScreen('screen-slideshow');
+            setTimeout(() => showSlide(0), 500);
+        }
+
+        /* ── Build slides ── */
+        function buildSlides() {
+            const container = document.getElementById('slidesContainer');
+            const progress = document.getElementById('slideshowProgress');
+            container.innerHTML = '';
+            progress.innerHTML = '';
+
+            SLIDES.forEach((s, i) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                slide.innerHTML = `
+                    <div class="slide-bg" style="background-image:url('${s.photo}')"></div>
+                    <div class="slide-frame">
+                        <div class="slide-photo-wrap">
+                            <div class="slide-photo" style="background-image:url('${s.photo}')"></div>
+                        </div>
+                    </div>
+                    <div class="slide-content">
+                        ${s.chapter ? `<p class="slide-chapter">${s.chapter}</p>` : ''}
+                        ${s.title ? `<h2 class="slide-title">${s.title}</h2>` : ''}
+                        ${s.body ? `<p class="slide-body">${s.body}</p>` : ''}
+                    </div>
+                `;
+                container.appendChild(slide);
+
+                const bar = document.createElement('div');
+                bar.className = 'progress-bar';
+                bar.innerHTML = '<div class="progress-bar-fill"></div>';
+                progress.appendChild(bar);
+            });
+        }
+
+        /* ── Show slide ── */
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const bars = document.querySelectorAll('.progress-bar');
+
+            slides.forEach((s, i) => {
+                if (i === index) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                    // Reset animations inside
+                    const bg = s.querySelector('.slide-bg');
+                    const pw = s.querySelector('.slide-photo-wrap');
+                    const sc = s.querySelector('.slide-content');
+                    if (bg) { bg.style.animation = 'none'; void bg.offsetWidth; bg.style.animation = ''; }
+                    if (pw) { pw.style.animation = 'none'; void pw.offsetWidth; pw.style.animation = ''; }
+                    if (sc) { sc.style.animation = 'none'; void sc.offsetWidth; sc.style.animation = ''; }
+                }
+            });
+
+            bars.forEach((b, i) => {
+                b.classList.toggle('active', i === index);
+                b.classList.toggle('done', i < index);
+                // Reset fill animation
+                const fill = b.querySelector('.progress-bar-fill');
+                if (fill) { fill.style.animation = 'none'; void fill.offsetWidth; fill.style.animation = ''; }
+            });
+
+            document.getElementById('slideCounter').textContent = `${index + 1} / ${SLIDES.length}`;
+
+            const btnNext = document.getElementById('btnNext');
+            if (index === SLIDES.length - 1) {
+                btnNext.innerHTML = 'Ler carta <i class="fa-solid fa-envelope-heart"></i>';
+            } else {
+                btnNext.innerHTML = 'Próximo <i class="fa-solid fa-chevron-right"></i>';
+            }
+
+            clearTimeout(autoTimer);
+            if (!isPaused) autoTimer = setTimeout(nextSlide, SLIDE_DURATION);
+        }
+
+        function nextSlide() {
+            if (currentSlide < SLIDES.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            } else {
+                clearTimeout(autoTimer);
+                goToScreen('screen-letter');
+                setTimeout(initLetterReveal, 600);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            document.getElementById('btnPause').innerHTML = isPaused
+                ? '<i class="fa-solid fa-play"></i>'
+                : '<i class="fa-solid fa-pause"></i>';
+            if (!isPaused) {
+                autoTimer = setTimeout(nextSlide, SLIDE_DURATION);
+            } else {
+                clearTimeout(autoTimer);
+            }
+        }
+
+        /* ── Go to final ── */
+        function goToFinal() {
+            goToScreen('screen-final');
+            setTimeout(() => {
+                launchConfetti();
+            }, 1200);
+        }
+
+        function launchConfetti() {
+            const colors = ['#f4c2cb', '#e8a0b0', '#c9a96e', '#ffffff', '#e8d5b0'];
+            confetti({ particleCount: 120, spread: 80, origin: { x: 0.5, y: 0.3 }, colors });
+            setTimeout(() => confetti({ particleCount: 60, spread: 120, origin: { x: 0.2, y: 0.5 }, colors }), 500);
+            setTimeout(() => confetti({ particleCount: 60, spread: 120, origin: { x: 0.8, y: 0.5 }, colors }), 900);
+            setTimeout(() => confetti({ particleCount: 80, spread: 60, origin: { x: 0.5, y: 0.6 }, colors, gravity: 0.6 }), 1400);
+        }
+
+        /* ── Scroll-reveal for letter ── */
+        function initLetterReveal() {
+            const blocks = document.querySelectorAll('#screen-letter .letter-block');
+            const dividers = document.querySelectorAll('#screen-letter .letter-block-divider');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const delay = el.dataset.delay || 0;
+                        setTimeout(() => {
+                            if (el.classList.contains('letter-block')) {
+                                el.classList.add('reveal');
+                            } else {
+                                el.classList.add('reveal-line');
+                            }
+                        }, delay);
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            blocks.forEach((b, i) => {
+                b.dataset.delay = i * 80;
+                observer.observe(b);
+            });
+            dividers.forEach((d, i) => {
+                d.dataset.delay = i * 80 + 200;
+                observer.observe(d);
+            });
+        }
+
+        /* ── Floating particles ── */
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const PARTICLE_COUNT = 28;
+        const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+            x: Math.random() * canvas.width,
+            y: canvas.height + Math.random() * 200,
+            size: 3 + Math.random() * 8,
+            speed: 0.4 + Math.random() * 0.8,
+            opacity: 0.08 + Math.random() * 0.18,
+            drift: (Math.random() - 0.5) * 0.4,
+            wobble: Math.random() * Math.PI * 2,
+            isHeart: Math.random() > 0.5
+        }));
+
+        function drawHeart(cx, cy, size, alpha) {
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.fillStyle = '#e8a0b0';
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            const s = size * 0.08;
+            ctx.bezierCurveTo(cx, cy - s, cx - size, cy - s, cx - size, cy + s * 2);
+            ctx.bezierCurveTo(cx - size, cy + s * 5, cx, cy + s * 8, cx, cy + size);
+            ctx.bezierCurveTo(cx, cy + s * 8, cx + size, cy + s * 5, cx + size, cy + s * 2);
+            ctx.bezierCurveTo(cx + size, cy - s, cx, cy - s, cx, cy);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.y -= p.speed;
+                p.wobble += 0.025;
+                p.x += Math.sin(p.wobble) * p.drift;
+
+                if (p.y < -30) {
+                    p.y = canvas.height + 20;
+                    p.x = Math.random() * canvas.width;
+                    p.opacity = 0.08 + Math.random() * 0.18;
+                }
+
+                if (p.isHeart) {
+                    drawHeart(p.x, p.y, p.size * 1.2, p.opacity);
+                } else {
+                    ctx.save();
+                    ctx.globalAlpha = p.opacity;
+                    ctx.fillStyle = '#c9a96e';
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+    </script>
+
+</body>
+
+</html>
