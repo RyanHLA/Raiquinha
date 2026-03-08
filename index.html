@@ -868,13 +868,17 @@
            SCREEN 3 — FINAL SURPRISE
         ============================================================ */
         #screen-final {
-            background: radical-gradient(#050002, #0a0005);
             background: #050002;
             text-align: center;
-            padding: 2.5rem 2rem;
+            padding: 0 2rem;
+            /* Removemos o padding vertical daqui para controlar melhor no container */
             overflow-y: auto;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
+            /* Garante que o conteúdo comece do topo */
         }
 
         .final-bg {
@@ -895,7 +899,8 @@
             flex-direction: column;
             align-items: center;
             gap: 0;
-            padding: 2rem 0 4rem;
+            /* Aumentamos o primeiro valor (topo) de 2rem para 12vh */
+            padding: 12vh 0 6rem;
         }
 
         .final-ornament {
@@ -1206,7 +1211,7 @@
             <div class="final-card">
                 <p class="final-card-text">
                     Você é a mulher mais <em>linda</em>, mais <em>inteligente</em> e mais <em>especial.
-                        Agradeço por cada momento, por cada sorriso, por cada vez que você escolheu estar aqui, estar
+                        Agradeço por cada momento, por cada sorriso, por cada vez que você escolheu estar aqui e estar
                         comigo.<br><br>
                         Sou seu e só seu, minha dhuguinha. Te amo muito! ❤️
                 </p>
