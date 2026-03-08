@@ -453,7 +453,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 2rem 1.8rem 10vh;
+            /* Aumentamos o padding inferior de 10vh para 18vh para empurrar o texto para cima */
+            padding: 2rem 1.8rem 14vh;
             z-index: 4;
             background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
             opacity: 0;
@@ -601,13 +602,17 @@
 
         .ctrl-btn-next {
             width: auto;
-            padding: 0 1.6rem;
+            min-width: 46px;
+            /* Garante que ele comece circular */
+            padding: 0 1.2rem;
             border-radius: 100px;
             font-family: 'DM Sans', sans-serif;
             font-size: 0.82rem;
             font-weight: 500;
             letter-spacing: 0.05em;
             gap: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Transição suave ao mudar para "Ler carta" */
         }
 
         /* Tap zones (invisible L/R halves) */
@@ -1100,10 +1105,9 @@
             </button>
             <button class="ctrl-btn" onclick="togglePause()" id="btnPause" title="Pausar">
                 <i class="fa-solid fa-pause"></i>
-            </button>
-            <button class="ctrl-btn ctrl-btn-next" onclick="nextSlide()" id="btnNext">
-                Próximo <i class="fa-solid fa-chevron-right"></i>
-            </button>
+                <button class="ctrl-btn ctrl-btn-next" onclick="nextSlide()" id="btnNext">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
         </div>
     </section>
 
@@ -1113,9 +1117,7 @@
         <div class="letter-container">
 
             <div class="letter-header">
-                <span class="letter-ornament">✦</span>
-                <h2 class="letter-title">Uma carta <span class="gold">para você</span></h2>
-                <p class="letter-date">8 de março de 2026 · Dia da mulher</p>
+                <h2 class="letter-title">Feliz dia <span class="gold">da mulher!</span></h2>
             </div>
 
             <div class="letter-block" id="lb1">
@@ -1198,23 +1200,21 @@
             <div class="final-ornament">💫</div>
 
             <h2 class="final-title">
-                Feliz Dia da<br><strong>Mulher Incrível</strong>
+                Feliz<br><strong>2 anos e 3 meses</strong>
             </h2>
 
             <div class="final-card">
                 <p class="final-card-text">
                     Você é a mulher mais <em>linda</em>, mais <em>inteligente</em> e mais <em>especial</em> que eu já
                     conheci.<br><br>
-                    Obrigado por cada momento, por cada sorriso, por cada vez que você escolheu estar aqui.<br><br>
-                    Você me faz querer ser <strong>o melhor de mim</strong> — todo dia.
+                    Obrigado por cada momento, por cada sorriso, por cada vez que você escolheu estar aqui.
                 </p>
-                <p class="final-signature">— Com todo o meu amor, R. 💕</p>
+                <p class="final-signature">— Com todo o meu amor, seu Dhuguinho 💕</p>
             </div>
 
             <div class="final-heart-burst">💗✨💗</div>
 
             <p class="final-prose">
-                Hoje e sempre, a minha princesinha favorita é você.<br>
                 Que esse dia seja tão especial quanto você é pra mim.
             </p>
 
@@ -1347,9 +1347,11 @@
 
             const btnNext = document.getElementById('btnNext');
             if (index === SLIDES.length - 1) {
+                // Mantemos o texto aqui para ela saber que a história continua na carta
                 btnNext.innerHTML = 'Ler carta <i class="fa-solid fa-envelope-heart"></i>';
             } else {
-                btnNext.innerHTML = 'Próximo <i class="fa-solid fa-chevron-right"></i>';
+                // Removemos o texto "Próximo" e deixamos apenas o ícone
+                btnNext.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
             }
 
             clearTimeout(autoTimer);
